@@ -1,0 +1,27 @@
+@model Bookstore.Models.Author
+
+@{
+    ViewData["Title"] = "Author Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Author Details</h4>
+            </div>
+
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.FullName)</dt>
+                    <dd class="col-sm-8">@Model.FullName</dd>
+                </dl>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>

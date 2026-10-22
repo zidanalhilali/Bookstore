@@ -1,0 +1,58 @@
+@model IEnumerable<Bookstore.Models.Author>
+
+@{
+    ViewData["Title"] = "Authors";
+    var search = ViewData["Search"] as string;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Authors</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Add Author</a>
+</div>
+
+<form asp-action="Index" method="get" class="row g-2 mb-3">
+    <div class="col-sm-8 col-md-6">
+        <input type="search" name="search" value="@search" class="form-control"
+               placeholder="Search by name" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+        @if (!string.IsNullOrWhiteSpace(search))
+        {
+            <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+        }
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        @(string.IsNullOrWhiteSpace(search)
+            ? "No authors yet. Add your first author."
+            : $"No authors match \"{search}\".")
+    </div>
+}
+else
+{
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FullName</td>
+                    <td class="text-end">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Details</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

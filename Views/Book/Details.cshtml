@@ -1,0 +1,55 @@
+@model Bookstore.Models.Book
+
+@{
+    ViewData["Title"] = Model.Title;
+    var hasImage = !string.IsNullOrEmpty(Model.ImageUrl);
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-9 col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Book Details</h4>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    @if (hasImage)
+                    {
+                        <div class="col-sm-4 mb-3 mb-sm-0">
+                            <img src="~/uploads/@Model.ImageUrl" alt="@Model.Title" class="img-fluid img-thumbnail" />
+                        </div>
+                    }
+                    <div class="@(hasImage ? "col-sm-8" : "col-12")">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4">Title</dt>
+                            <dd class="col-sm-8">@Model.Title</dd>
+
+                            <dt class="col-sm-4">Author</dt>
+                            <dd class="col-sm-8">
+                                <a asp-controller="Author" asp-action="Details" asp-route-id="@Model.AuthorId">@Model.Author.FullName</a>
+                            </dd>
+
+                            <dt class="col-sm-4">Description</dt>
+                            <dd class="col-sm-8">
+                                @if (string.IsNullOrWhiteSpace(Model.Description))
+                                {
+                                    <span class="text-muted">No description</span>
+                                }
+                                else
+                                {
+                                    @Model.Description
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>
